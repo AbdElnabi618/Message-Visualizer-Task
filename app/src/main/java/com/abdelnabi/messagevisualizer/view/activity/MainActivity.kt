@@ -114,7 +114,7 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback, MessageAdapter.OnI
            addAllMarksToMap()
         }else{
             addMarkToMap(item)
-            mMap.moveCamera(CameraUpdateFactory.newLatLng(item.latLng))
+            mMap.animateCamera(CameraUpdateFactory.newLatLng(item.latLng))
         }
     }
 }

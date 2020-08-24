@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/_150sdp"
+    android:layout_height="wrap_content"
+    android:background="@drawable/white_background"
+    android:elevation="@dimen/_8sdp"
+    android:translationZ="@dimen/_4sdp"
+    android:layout_margin="@dimen/_8sdp"
+    android:maxHeight="@dimen/_120sdp">
+
+    <TextView
+        android:id="@+id/tv_message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Hello from Mansoura this ello from Mansoura this is my test  Hello from Mansoura this is my test "
+        android:gravity="center"
+        android:layout_margin="@dimen/_8sdp"
+        android:textSize="@dimen/_12ssp"
+        />
+    <TextView
+        android:id="@+id/tv_sentiment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_message"
+        android:text="nutual"
+        android:gravity="center"
+        android:layout_margin="@dimen/_8sdp"
+        android:textStyle="bold"
+        android:textColor="#EF5350"
+        android:textSize="@dimen/_12ssp"
+        />
+</RelativeLayout>

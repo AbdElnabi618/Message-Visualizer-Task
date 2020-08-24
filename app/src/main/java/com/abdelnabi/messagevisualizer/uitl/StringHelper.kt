@@ -19,7 +19,6 @@ fun getMessageInfoFromString(content: String): MessageInfoModel? {
     info.message = getMessageFromString(dataList[2])
     info.sentiment = dataList[3]
     val country = getCountry(info.message!!)
-    val latlngList = mutableListOf<LatLng>()
     for(item in country!!){
         // please note this function return one result only or empty list
         val countryLocationFromString = getCountryLocationFromString(item)

@@ -21,11 +21,11 @@ fun getMessageInfoFromString(content: String): MessageInfoModel? {
     val country = getCountry(info.message!!)
     val latlngList = mutableListOf<LatLng>()
     for(item in country!!){
-        // please note this function return one result only
-        latlngList.add(getCountryLocationFromString(item)[0])
+        // please note this function return one result only or empty list
+        val countryLocationFromString = getCountryLocationFromString(item)
+        if(countryLocationFromString.isNotEmpty())
+            info.latLng = (countryLocationFromString[0])
     }
-    // we need first address if we faced more than one "other address for city or country but same place"
-    info.latLng = latlngList[0]
     return info
 }
 
@@ -60,9 +60,9 @@ private fun getMessageFromString(text: String): String? {
  */
 private fun getCountry(message: String): List<String>? {
     val country: MutableList<String> = ArrayList()
-    val words = message.split(" ".toRegex()).toTypedArray()
+    val words = message.split(" ")
     for (word in words) {
-        if (Character.isUpperCase(word[0])) {
+        if (word.isNotEmpty() && Character.isUpperCase(word[0])) {
             country.add(word)
         }
     }

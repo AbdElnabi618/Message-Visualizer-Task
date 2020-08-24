@@ -1,9 +1,11 @@
 package com.abdelnabi.messagevisualizer.data
 
+import com.abdelnabi.messagevisualizer.model.MessageModel
 import com.google.gson.GsonBuilder
 import com.ihsanbal.logging.Level
 import com.ihsanbal.logging.LoggingInterceptor
 import okhttp3.OkHttpClient
+import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
@@ -44,5 +46,8 @@ class  ApiClient private constructor() {
         apiInterface = retrofitBuild.create(ApiInterface::class.java)
     }
 
+    fun getMessage():Call<MessageModel>{
+        return apiInterface.getMessage()
+    }
 
 }

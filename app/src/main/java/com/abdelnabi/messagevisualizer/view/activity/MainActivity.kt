@@ -1,10 +1,8 @@
 package com.abdelnabi.messagevisualizer.view.activity
 
-import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.abdelnabi.messagevisualizer.R
@@ -12,16 +10,12 @@ import com.abdelnabi.messagevisualizer.model.MessageInfoModel
 import com.abdelnabi.messagevisualizer.uitl.DialogUtil
 import com.abdelnabi.messagevisualizer.view.adapter.MessageAdapter
 import com.abdelnabi.messagevisualizer.view_model.MessageViewModel
-
-import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
-import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.item_message.view.*
 
 class MainActivity : AppCompatActivity(), OnMapReadyCallback, MessageAdapter.OnItemClick {
 
@@ -29,6 +23,7 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback, MessageAdapter.OnI
     private lateinit var messageAdapter : MessageAdapter
     private lateinit var viewModel : MessageViewModel
     private lateinit var dialog : DialogUtil
+    private lateinit var messageList: List<MessageInfoModel>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,8 +55,16 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback, MessageAdapter.OnI
     private fun observeData() {
         viewModel.mutableLiveData.observe(this, {
             dialog.hideDialog()
+            messageList = it
+            for (message in messageList)
+                addMarkToMap(message)
+            // add item to show all item
+            val messageInfoModel = MessageInfoModel()
+            messageInfoModel.message = "Show All Message"
+            messageInfoModel.sentiment = ""
+            messageInfoModel.id = "abdelnabi618"
+            it.add(0, messageInfoModel)
             messageAdapter.list = it!!
-            addMarksToMap(it)
         })
 
         viewModel.onErrorThrowableMutableLiveData.observe(this, {
@@ -70,20 +73,18 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback, MessageAdapter.OnI
         })
     }
 
-    private fun addMarksToMap(messageList :List<MessageInfoModel>){
-        for(message in messageList){
-            val markerOptions = MarkerOptions()
-            markerOptions.title(message.message)
-            markerOptions.position(message.latLng)
-            val defaultMarker = when(message.sentiment){
-                "Negative" -> BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)
-                "Neutral"-> BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)
-                "Positive"-> BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)
-                else -> null
-            }
-            markerOptions.icon(defaultMarker)
-            mMap.addMarker(markerOptions)
+    private fun addMarkToMap(message : MessageInfoModel) {
+        val markerOptions = MarkerOptions()
+        markerOptions.title(message.message)
+        markerOptions.position(message.latLng)
+        val defaultMarker = when (message.sentiment) {
+            "Negative" -> BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)
+            "Neutral" -> BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)
+            "Positive" -> BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)
+            else -> null
         }
+        markerOptions.icon(defaultMarker)
+        mMap.addMarker(markerOptions)
     }
 
     /**

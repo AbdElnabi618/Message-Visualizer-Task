@@ -15,7 +15,7 @@ import retrofit2.Response
 class MessageViewModel : ViewModel() {
 
     val mutableLiveData =
-        MutableLiveData<List<MessageInfoModel>>()
+        MutableLiveData<MutableList<MessageInfoModel>>()
     val onErrorThrowableMutableLiveData =
         MutableLiveData<String>()
 
@@ -49,7 +49,7 @@ class MessageViewModel : ViewModel() {
         })
     }
 
-    fun getMessageInfo(dataList : List<MessageModel.EntryEntity>): List<MessageInfoModel>{
+    fun getMessageInfo(dataList : List<MessageModel.EntryEntity>): MutableList<MessageInfoModel>{
         val messageList = mutableListOf<MessageInfoModel>()
         for(item in dataList){
             messageList.add(getMessageInfoFromString(item.content!!.messageBody!!)!!)

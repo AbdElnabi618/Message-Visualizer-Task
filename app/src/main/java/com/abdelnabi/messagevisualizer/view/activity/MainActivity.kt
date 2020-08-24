@@ -10,6 +10,7 @@ import com.abdelnabi.messagevisualizer.model.MessageInfoModel
 import com.abdelnabi.messagevisualizer.uitl.DialogUtil
 import com.abdelnabi.messagevisualizer.view.adapter.MessageAdapter
 import com.abdelnabi.messagevisualizer.view_model.MessageViewModel
+import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
@@ -56,8 +57,7 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback, MessageAdapter.OnI
         viewModel.mutableLiveData.observe(this, {
             dialog.hideDialog()
             messageList = it
-            for (message in messageList)
-                addMarkToMap(message)
+            addAllMarksToMap()
             // add item to show all item
             val messageInfoModel = MessageInfoModel()
             messageInfoModel.message = "Show All Message"
@@ -71,6 +71,11 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback, MessageAdapter.OnI
             dialog.hideDialog()
             Toast.makeText(this, it!!, Toast.LENGTH_SHORT).show()
         })
+    }
+
+    private fun addAllMarksToMap() {
+        for (message in messageList)
+            addMarkToMap(message)
     }
 
     private fun addMarkToMap(message : MessageInfoModel) {
@@ -101,13 +106,15 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback, MessageAdapter.OnI
         // move map to center
         mMap.cameraPosition.target
         mMap.uiSettings.isZoomControlsEnabled = true
-//        // Add a marker in Sydney and move the camera
-//        val sydney = LatLng(-34.0, 151.0)
-//        mMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
-//        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
     }
 
     override fun itemSelected(item: MessageInfoModel) {
-        TODO("Not yet implemented")
+        mMap.clear()
+        if(item.id == "abdelnabi618"){
+           addAllMarksToMap()
+        }else{
+            addMarkToMap(item)
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(item.latLng))
+        }
     }
 }

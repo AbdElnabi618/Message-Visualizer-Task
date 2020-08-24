@@ -1,19 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="@dimen/_150sdp"
+    android:layout_width="@dimen/_120sdp"
     android:layout_height="wrap_content"
     android:background="@drawable/white_background"
     android:elevation="@dimen/_8sdp"
     android:translationZ="@dimen/_4sdp"
-    android:layout_margin="@dimen/_8sdp"
-    android:maxHeight="@dimen/_120sdp">
+    android:layout_margin="@dimen/_8sdp">
 
     <TextView
         android:id="@+id/tv_message"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Hello from Mansoura this ello from Mansoura this is my test  Hello from Mansoura this is my test "
+        android:layout_height="@dimen/_75sdp"
+        android:text="Hello from Mansoura"
         android:gravity="center"
         android:layout_margin="@dimen/_8sdp"
         android:textSize="@dimen/_12ssp"

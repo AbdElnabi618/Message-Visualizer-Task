@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 import com.abdelnabi.messagevisualizer.data.ApiClient
 import com.abdelnabi.messagevisualizer.model.MessageInfoModel
 import com.abdelnabi.messagevisualizer.model.MessageModel
-import com.abdelnabi.messagevisualizer.model.getMessageInfoFromString
+import com.abdelnabi.messagevisualizer.uitl.getMessageInfoFromString
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

@@ -1,7 +1,8 @@
-package com.abdelnabi.messagevisualizer.model
+package com.abdelnabi.messagevisualizer.uitl
 
 import android.location.Geocoder
 import android.util.Log.e
+import com.abdelnabi.messagevisualizer.model.MessageInfoModel
 import com.abdelnabi.messagevisualizer.view.App
 import com.google.android.gms.maps.model.LatLng
 import java.io.IOException

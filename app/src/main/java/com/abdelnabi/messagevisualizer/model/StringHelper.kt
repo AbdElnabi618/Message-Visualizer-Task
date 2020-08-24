@@ -1,8 +1,8 @@
 package com.abdelnabi.messagevisualizer.model
 
-import android.content.Context
 import android.location.Geocoder
 import android.util.Log.e
+import com.abdelnabi.messagevisualizer.view.App
 import com.google.android.gms.maps.model.LatLng
 import java.io.IOException
 
@@ -11,7 +11,7 @@ private const val TAG = "String Helper Tag"
  * this method receive content from api and convert it to MessageInfoModel object
  * content : example -> "messageid: 4, message: Lovely shisa in Cairo, Egypt, sentiment: Positive"
  */
-fun getMessageInfo(content: String, context: Context): MessageInfoModel? {
+fun getMessageInfoFromString(content: String): MessageInfoModel? {
     val info = MessageInfoModel()
     val dataList = content.split(": ").toTypedArray()
     info.id = getMessageIdFromString(dataList[1])
@@ -21,7 +21,7 @@ fun getMessageInfo(content: String, context: Context): MessageInfoModel? {
     val latlngList = mutableListOf<LatLng>()
     for(item in country!!){
         // please note this function return one result only
-        latlngList.add(getCountryLocation(item, context)[0])
+        latlngList.add(getCountryLocationFromString(item)[0])
     }
     // we need first address if we faced more than one "other address for city or country but same place"
     info.latLng = latlngList[0]
@@ -72,11 +72,11 @@ private fun getCountry(message: String): List<String>? {
  * this function used to get country latitude and longitude from location name
  * return list of Latlng with on item of location
  */
-private fun getCountryLocation(location :String, context: Context) : MutableList<LatLng>{
+private fun getCountryLocationFromString(location :String) : MutableList<LatLng>{
     val ll: MutableList<LatLng> = ArrayList(1)
     if (Geocoder.isPresent()) {
         try {
-            val addressesList = Geocoder(context).getFromLocationName(location, 1)
+            val addressesList = Geocoder(App.context).getFromLocationName(location, 1)
             for (address in addressesList) {
                 if (address.hasLatitude() && address.hasLongitude()) {
                     ll.add(LatLng(address.latitude, address.longitude))
